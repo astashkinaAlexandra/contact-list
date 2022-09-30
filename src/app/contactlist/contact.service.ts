@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Contact } from './contact';
-import { HttpClient } from '@angular/common/http';
+import { Http, Response } from '@angular/http';
 
 @Injectable()
 export class ContactService {
     private contactsUrl = '/api/contacts';
 
-    constructor (private http: HttpClient) {}
+    constructor (private http: Http) {}
 
     // get("/api/contacts")
     getContacts(): Promise<Contact[]> {
       return this.http.get(this.contactsUrl)
                  .toPromise()
-                 .then(response => response as Contact[])
+                 .then(response => response!.json() as Contact[])
                  .catch(this.handleError);
     }
 
@@ -20,7 +20,7 @@ export class ContactService {
     createContact(newContact: Contact): Promise<Contact> {
       return this.http.post(this.contactsUrl, newContact)
                  .toPromise()
-                 .then(response => response as Contact)
+                 .then(response => response!.json() as Contact)
                  .catch(this.handleError);
     }
 
@@ -30,7 +30,7 @@ export class ContactService {
     deleteContact(delContactId: String): Promise<String> {
       return this.http.delete(this.contactsUrl + '/' + delContactId)
                  .toPromise()
-                 .then(response => response as String)
+                 .then(response => response!.json() as String)
                  .catch(this.handleError);
     }
 
@@ -39,7 +39,7 @@ export class ContactService {
       var putUrl = this.contactsUrl + '/' + putContact._id;
       return this.http.put(putUrl, putContact)
                  .toPromise()
-                 .then(response => response as Contact)
+                 .then(response => response!.json() as Contact)
                  .catch(this.handleError);
     }
 
