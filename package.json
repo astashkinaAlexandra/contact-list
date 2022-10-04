@@ -9,6 +9,9 @@
     "test": "ng test",
     "postinstall": "ng build --output-path dist"
   },
+  "engines": {
+    "node": "18.x"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^14.2.0",
